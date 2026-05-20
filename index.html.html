@@ -876,52 +876,146 @@
     }
 
     /* ============================================================
-       ROADMAP
+       ROADMAP - MODERN DESIGN
     ============================================================ */
     .roadmap-steps {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px;
+      position: relative;
+    }
+    .roadmap-steps::before {
+      content: '';
+      position: absolute;
+      top: 50px;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold) 0%, rgba(245,166,35,0.2) 100%);
+      z-index: 0;
     }
     .roadmap-step {
+      position: relative;
+      z-index: 1;
       display: flex;
-      align-items: flex-start;
-      gap: 24px;
-      padding: 28px 0;
-      border-bottom: 1px solid var(--border);
-      transition: all 260ms;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 0;
+      border: none;
+      transition: all 320ms var(--ease-out);
+      cursor: default;
     }
-    .roadmap-step:last-child { border-bottom: none; }
-    .roadmap-step:hover .step-num-inner { background: var(--gold); color: var(--navy); }
+    .roadmap-step:hover {
+      transform: translateY(-8px);
+    }
     .step-num {
       flex-shrink: 0;
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: center;
       gap: 0;
+      margin-bottom: 20px;
     }
     .step-num-inner {
-      width: 48px; height: 48px;
+      width: 80px;
+      height: 80px;
       border-radius: 50%;
-      background: var(--navy);
-      color: var(--gold);
-      display: flex; align-items: center; justify-content: center;
-      font-family: var(--font-display);
-      font-size: 18px;
-      font-weight: 700;
-      transition: all 280ms;
-    }
-    .step-content { padding-top: 10px; }
-    .step-title {
-      font-size: 18px;
-      font-weight: 600;
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
       color: var(--navy);
-      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 32px;
+      font-weight: 700;
+      transition: all 320ms var(--ease-out);
+      box-shadow: 0 12px 40px rgba(245,166,35,0.25);
+      position: relative;
+    }
+    .roadmap-step:hover .step-num-inner {
+      transform: scale(1.12) rotate(5deg);
+      box-shadow: 0 20px 60px rgba(245,166,35,0.35);
+    }
+    .step-num-inner::before {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      background: rgba(245,166,35,0.15);
+      animation: pulse-ring 2s infinite;
+    }
+    @keyframes pulse-ring {
+      0% { transform: scale(1); opacity: 1; }
+      100% { transform: scale(1.3); opacity: 0; }
+    }
+    .step-content {
+      padding: 28px 16px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius-md);
+      backdrop-filter: blur(10px);
+      transition: all 320ms var(--ease-out);
+      min-height: 140px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      width: 100%;
+    }
+    .roadmap-step:hover .step-content {
+      background: rgba(245,166,35,0.12);
+      border-color: rgba(245,166,35,0.3);
+      box-shadow: 0 16px 48px rgba(245,166,35,0.15);
+    }
+    .step-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 8px;
+      line-height: 1.4;
     }
     .step-desc {
-      font-size: 15px;
-      color: var(--text-muted);
-      line-height: 1.55;
+      font-size: 13px;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.6;
+      flex-grow: 1;
+    }
+    @media (max-width: 1024px) {
+      .roadmap-steps {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+      }
+      .roadmap-steps::before { top: 65px; }
+    }
+    @media (max-width: 768px) {
+      .roadmap-steps {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+      }
+      .roadmap-steps::before { display: none; }
+      .step-num-inner {
+        width: 70px;
+        height: 70px;
+        font-size: 28px;
+      }
+      .step-content {
+        padding: 24px 14px;
+        min-height: 130px;
+      }
+      .step-title { font-size: 15px; }
+      .step-desc { font-size: 12px; }
+    }
+    @media (max-width: 480px) {
+      .roadmap-steps {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+      .step-num-inner {
+        width: 60px;
+        height: 60px;
+        font-size: 24px;
+      }
     }
 
     /* ============================================================
@@ -1648,42 +1742,43 @@
     <div class="container">
       <div class="section-header">
         <div class="tag reveal">Roadmap</div>
-        <h2 class="section-heading reveal reveal-delay-1" style="color:var(--white);">Your 5-Step Roadmap to the CWM® Designation</h2>
+        <h2 class="section-heading reveal reveal-delay-1" style="color:var(--white);">Your 5-Step Journey to CWM® Mastery</h2>
+        <p class="section-sub reveal reveal-delay-2" style="color:rgba(255,255,255,0.6);">Follow our proven pathway designed by industry experts to accelerate your wealth management career.</p>
       </div>
-      <div class="roadmap-steps" style="max-width:680px;margin:0 auto;">
+      <div class="roadmap-steps">
         <div class="roadmap-step reveal">
           <div class="step-num"><div class="step-num-inner">01</div></div>
           <div class="step-content">
-            <div class="step-title" style="color:var(--white);">Register for CWM®</div>
-            <div class="step-desc" style="color:rgba(255,255,255,0.55);">Choose Compulsory, Experience or Corporate pathway.</div>
+            <div class="step-title">Register for CWM®</div>
+            <div class="step-desc">Choose Compulsory, Experience or Corporate pathway based on your profile.</div>
           </div>
         </div>
         <div class="roadmap-step reveal reveal-delay-1">
           <div class="step-num"><div class="step-num-inner">02</div></div>
           <div class="step-content">
-            <div class="step-title" style="color:var(--white);">Study with USA-ACER System</div>
-            <div class="step-desc" style="color:rgba(255,255,255,0.55);">Access lessons, videos, mock tests, question bank and webinars.</div>
+            <div class="step-title">Study with USA-ACER</div>
+            <div class="step-desc">Access lessons, videos, mock tests, question bank and expert webinars.</div>
           </div>
         </div>
         <div class="roadmap-step reveal reveal-delay-2">
           <div class="step-num"><div class="step-num-inner">03</div></div>
           <div class="step-content">
-            <div class="step-title" style="color:var(--white);">Clear Level 1 Exam</div>
-            <div class="step-desc" style="color:rgba(255,255,255,0.55);">Compulsory pathway candidates clear the foundation exam.</div>
+            <div class="step-title">Clear Level 1 Exam</div>
+            <div class="step-desc">Master foundation concepts with MCQ-based exam at your convenience.</div>
           </div>
         </div>
         <div class="roadmap-step reveal reveal-delay-3">
           <div class="step-num"><div class="step-num-inner">04</div></div>
           <div class="step-content">
-            <div class="step-title" style="color:var(--white);">Clear Level 2 &amp; Complete Projects</div>
-            <div class="step-desc" style="color:rgba(255,255,255,0.55);">Submit project work and demonstrate advisory application.</div>
+            <div class="step-title">Level 2 &amp; Projects</div>
+            <div class="step-desc">Complete advanced exam and real-world advisory project submissions.</div>
           </div>
         </div>
         <div class="roadmap-step reveal reveal-delay-4">
           <div class="step-num"><div class="step-num-inner">05</div></div>
           <div class="step-content">
-            <div class="step-title" style="color:var(--white);">Join AAFM® as Member &amp; Get Certified</div>
-            <div class="step-desc" style="color:rgba(255,255,255,0.55);">Receive your CWM® charter and use the designation professionally.</div>
+            <div class="step-title">Achieve CWM® Charter</div>
+            <div class="step-desc">Join AAFM® members and proudly use the global CWM® designation.</div>
           </div>
         </div>
       </div>
